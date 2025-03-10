@@ -80,7 +80,7 @@
                         @foreach($products as $product)
                             <tr>
                                 <td>{{ $product->product_name }}</td>
-                                <td>{{ $product->business->name ?? 'N/A' }}</td>
+                                <td>{{ $product->business->business_name ?? 'N/A' }}</td>
                                 <td>{{ $product->product_type }}</td>
                                 <td>${{ number_format($product->price, 2) }}</td>
                                 <td>
