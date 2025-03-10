@@ -91,7 +91,7 @@
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 @if(Auth::user()->resident)
-                                    <a class="dropdown-item" href="{{ route('resident.edit') }}">
+                                    <a class="dropdown-item" href="{{ route('resident.edit', Auth::user()->resident) }}">
                                         {{ __('My Profile') }}
                                     </a>
                                 @else

@@ -58,8 +58,8 @@ Route::middleware(['auth'])->group(function () {
     // Residents
     Route::get('/resident/create', [ResidentController::class, 'create'])->name('resident.create');
     Route::post('/resident', [ResidentController::class, 'store'])->name('resident.store');
-    Route::get('/resident/edit', [ResidentController::class, 'edit'])->name('resident.edit');
-    Route::put('/resident', [ResidentController::class, 'update'])->name('resident.update');
+    Route::get('/resident/edit/{id}', [ResidentController::class, 'edit'])->name('resident.edit');
+    Route::put('/resident/{id}', [ResidentController::class, 'update'])->name('resident.update');
 
     // Votes
     Route::post('/votes', [VoteController::class, 'store'])->name('votes.store');

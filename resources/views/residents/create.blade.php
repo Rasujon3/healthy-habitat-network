@@ -25,7 +25,7 @@
                     <!-- Area Selection -->
                     <div class="col-md-12 mb-3">
                         <label for="area_id">Area</label>
-                        <select class="form-select @error('status') is-invalid @enderror" id="area_id" name="area_id" required>
+                        <select class="form-select @error('area_id') is-invalid @enderror" id="area_id" name="area_id" required>
                             <option value="">Select Area</option>
                             @foreach($areas as $area)
                                 <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{ $area->area_name }}</option>

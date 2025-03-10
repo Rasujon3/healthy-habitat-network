@@ -5,65 +5,100 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Edit Business</div>
+                    <div class="card-header">Edit Resident</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('businesses.update', $business->id) }}">
+                        <form method="POST" action="{{ route('resident.update', $resident->id) }}">
                             @csrf
                             @method('PUT')
-                            <!-- Name -->
+                            <!-- User Selection -->
+                            <input id="user_id" name="user_id" value="{{ Auth::user()->id }}" hidden="hidden">
+                            <!-- Area Selection -->
                             <div class="col-md-12 mb-3">
-                                <label for="business_name" class="form-label">Business Name <span class="text-danger">*</span></label>
+                                <label for="area_id">Area</label>
+                                <select class="form-select @error('area_id') is-invalid @enderror" id="area_id" name="area_id" required>
+                                    <option value="">Select Area</option>
+                                    @foreach($areas as $area)
+                                        <option value="{{ $area->id }}" {{ old('area_id', $resident->area_id) == $area->id ? 'selected' : '' }}>{{ $area->area_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('area_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Resident Name -->
+                            <div class="col-md-12 mb-3">
+                                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input
                                     type="text"
-                                    name="business_name"
-                                    id="business_name"
-                                    class="form-control @error('business_name') is-invalid @enderror"
-                                    value="{{ old('business_name', $business->business_name) }}"
+                                    name="name"
+                                    id="name"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    value="{{ old('name',$resident->name) }}"
                                     required
                                 >
-                                @error('business_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                @error('name')
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Contact Info -->
+                            <!-- Age Group -->
                             <div class="col-md-12 mb-3">
-                                <label for="contact_info" class="form-label">Contact Info</label>
-                                <textarea name="contact_info" id="contact_info" class="form-control @error('contact_info') is-invalid @enderror" rows="3">{{ old('contact_info', $business->contact_info) }}</textarea>
-                                @error('contact_info')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <label for="age_group" class="form-label">Age Group <span class="text-danger">*</span></label>
+                                <input
+                                    type="text"
+                                    name="age_group"
+                                    id="age_group"
+                                    class="form-control @error('age_group') is-invalid @enderror"
+                                    value="{{ old('age_group', $resident->age_group) }}"
+                                    required
+                                >
+                                @error('age_group')
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Description -->
+                            <!-- Gender -->
                             <div class="col-md-12 mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror" rows="3">{{ old('description', $business->description) }}</textarea>
-                                @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Status -->
-                            <div class="col-md-6 mb-3">
-                                <label for="status" class="form-label">Business Status <span class="text-danger">*</span></label>
-                                <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
-                                    <option value="">Select a Status</option>
-                                    <option value="active" {{ old('status', $business->status) == 'active' ? 'selected' : '' }}>Active</option>
-                                    <option value="inactive" {{ old('status', $business->status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                <label for="gender">Gender</label>
+                                <select class="form-select @error('gender') is-invalid @enderror" id="gender" name="gender" required>
+                                    <option value="male" {{ old('gender', $resident->gender) == 'male' ? 'selected' : '' }}>Male</option>
+                                    <option value="female" {{ old('gender', $resident->gender) == 'female' ? 'selected' : '' }}>Female</option>
+                                    <option value="other" {{ old('gender', $resident->gender) == 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
-                                @error('status')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                @error('gender')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Interest Areas -->
+                            <div class="col-md-12 mb-3">
+                                <label for="interest_areas">Interest Areas</label>
+                                <select class="form-select @error('interest_areas') is-invalid @enderror" id="interest_areas" name="interest_areas[]" multiple required>
+                                    @php
+                                        // Decode the interest_areas field into an array
+                                        $interestAreas = json_decode($resident->interest_areas, true);
+                                    @endphp
+
+                                    <option value="education" {{ in_array('education', old('interest_areas', $interestAreas)) ? 'selected' : '' }}>Education</option>
+                                    <option value="healthcare" {{ in_array('healthcare', old('interest_areas', $interestAreas)) ? 'selected' : '' }}>Healthcare</option>
+                                    <option value="environment" {{ in_array('environment', old('interest_areas', $interestAreas)) ? 'selected' : '' }}>Environment</option>
+                                    <option value="technology" {{ in_array('technology', old('interest_areas', $interestAreas)) ? 'selected' : '' }}>Technology</option>
+                                    <option value="sports" {{ in_array('sports', old('interest_areas', $interestAreas)) ? 'selected' : '' }}>Sports</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                                @error('interest_areas')
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Update Business
+                                        Update Resident
                                     </button>
-                                    <a href="{{ route('businesses.index') }}" class="btn btn-secondary">
+                                    <a href="{{ route('products.index') }}" class="btn btn-secondary">
                                         Cancel
                                     </a>
                                 </div>
