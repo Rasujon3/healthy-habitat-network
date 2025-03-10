@@ -39,13 +39,6 @@ class ProductController extends Controller
         $businesses = Business::where('status', 'active')->pluck('business_name', 'id');
         return view('products.create', compact('businesses'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
