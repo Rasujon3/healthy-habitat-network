@@ -10,9 +10,6 @@ class VoteController extends Controller
 {
     /**
      * Store a newly created vote in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -53,6 +50,7 @@ class VoteController extends Controller
             ]);
             $message = 'Your vote has been recorded.';
         }
+//        dd($message);
 
         return back()->with('success', $message);
     }
@@ -72,5 +70,15 @@ class VoteController extends Controller
             ->get();
 
         return view('votes.popular-products', compact('products'));
+    }
+    public function destroy($id)
+    {
+        $existVote = Vote::where('id', $id)->exists();
+        if (!$existVote) {
+            return back()->with('error', 'This vote does not exist.');
+        }
+
+        Vote::where('id', $id)->delete();
+        return back()->with('success', 'Your vote has been removed.');
     }
 }

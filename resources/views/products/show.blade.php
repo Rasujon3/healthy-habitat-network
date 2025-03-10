@@ -18,7 +18,15 @@
                 </a>
             </div>
         </div>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-8">
                 <!-- Product Details Card -->
@@ -130,6 +138,7 @@
                                     <form action="{{ route('votes.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <input type="hidden" name="vote_value" value="1">
                                         <button type="submit" class="btn btn-success">
                                             Vote for This Product
                                         </button>
