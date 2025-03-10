@@ -70,26 +70,11 @@ class ProductController extends Controller
         $product->load('business', 'votes.resident');
         return view('products.show', compact('product'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product)
     {
         $businesses = Business::where('status', 'active')->pluck('business_name', 'id');
         return view('products.edit', compact('product', 'businesses'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
