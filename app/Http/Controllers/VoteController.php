@@ -2,83 +2,75 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vote;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created vote in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        // Validate request
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'vote_value' => 'required|boolean',
+        ]);
+
+        // Check if product is available
+        $product = Product::findOrFail($request->product_id);
+        if (!$product->is_available) {
+            return back()->with('error', 'This product is currently unavailable for voting.');
+        }
+
+        // Get current resident
+        $resident = auth()->user()->resident;
+        if (!$resident) {
+            return redirect()->route('resident.create')
+                ->with('error', 'You need to complete your resident profile before voting.');
+        }
+
+        // Check if resident has already voted for this product
+        $existingVote = Vote::where('resident_id', $resident->id)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        if ($existingVote) {
+            // Update existing vote
+            $existingVote->update(['vote_value' => $request->vote_value]);
+            $message = 'Your vote has been updated.';
+        } else {
+            // Create new vote
+            Vote::create([
+                'resident_id' => $resident->id,
+                'product_id' => $request->product_id,
+                'vote_value' => $request->vote_value,
+            ]);
+            $message = 'Your vote has been recorded.';
+        }
+
+        return back()->with('success', $message);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display most popular products based on votes
      */
-    public function show($id)
+    public function popularProducts()
     {
-        //
-    }
+        // Get products with vote counts
+        $products = Product::withCount(['votes as positive_votes' => function ($query) {
+            $query->where('vote_value', true);
+        }])
+            ->orderBy('positive_votes', 'desc')
+            ->take(10)
+            ->with('business')
+            ->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('votes.popular-products', compact('products'));
     }
 }

@@ -1,22 +1,49 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AreaController;
+use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\VoteController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Auth routes provided by Laravel UI
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Protected routes that require authentication
+Route::middleware(['auth'])->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Areas
+    Route::resource('areas', AreaController::class);
+
+    // Businesses
+    Route::resource('businesses', BusinessController::class);
+
+    // Products
+    Route::resource('products', ProductController::class);
+    Route::post('/products/batch-update', [ProductController::class, 'batchUpdateAvailability'])
+        ->name('products.batch-update');
+
+    // Residents
+    Route::get('/resident/create', [ResidentController::class, 'create'])->name('resident.create');
+    Route::post('/resident', [ResidentController::class, 'store'])->name('resident.store');
+    Route::get('/resident/edit', [ResidentController::class, 'edit'])->name('resident.edit');
+    Route::put('/resident', [ResidentController::class, 'update'])->name('resident.update');
+
+    // Votes
+    Route::post('/votes', [VoteController::class, 'store'])->name('votes.store');
+    Route::get('/popular-products', [VoteController::class, 'popularProducts'])->name('votes.popular');
+});
