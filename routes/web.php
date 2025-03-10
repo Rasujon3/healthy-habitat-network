@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\BusinessController;
@@ -13,6 +15,22 @@ use App\Http\Controllers\DashboardController;
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// Registration Routes
+Route::get('/register', function() {
+    return view('auth.register-choice');
+})->name('register');
+
+Route::get('/register/resident', [RegisterController::class, 'showResidentRegistrationForm'])->name('register.resident');
+Route::post('/register/resident', [RegisterController::class, 'registerResident']);
+
+Route::get('/register/business', [RegisterController::class, 'showBusinessRegistrationForm'])->name('register.business');
+Route::post('/register/business', [RegisterController::class, 'registerBusiness']);
+
+// Login Routes
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/', function () {
     return view('welcome');

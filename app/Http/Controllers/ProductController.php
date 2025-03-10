@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $query = Product::with('business');
@@ -39,12 +34,6 @@ class ProductController extends Controller
 
         return view('products.index', compact('products', 'productTypes'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $businesses = Business::where('status', 'active')->pluck('business_name', 'id');

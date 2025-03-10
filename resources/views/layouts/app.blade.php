@@ -10,11 +10,29 @@
 
     <title>{{ config('app.name', 'Healthy Habitat Network') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Bootstrap CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Custom styles (if needed) -->
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #app {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        .bg-purple {
+            background-color: #6f42c1;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
@@ -123,5 +141,8 @@
         </div>
     </footer>
 </div>
+
+<!-- Bootstrap JS Bundle with Popper from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

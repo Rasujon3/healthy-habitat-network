@@ -1,72 +1,127 @@
 <?php
+// app/Http/Controllers/Auth/RegisterController.php
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Area;
+use App\Models\Resident;
+use App\Models\Business;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    // Show resident registration form
+    public function showResidentRegistrationForm()
     {
-        return Validator::make($data, [
+        $areas = Area::all();
+        return view('auth.register-resident', compact('areas'));
+    }
+
+    // Show business registration form
+    public function showBusinessRegistrationForm()
+    {
+        $areas = Area::all();
+        return view('auth.register-business', compact('areas'));
+    }
+
+    // Handle resident registration
+    public function registerResident(Request $request)
+    {
+        $this->validateResident($request);
+
+        event(new Registered($resident = $this->createResident($request)));
+
+        return redirect($this->redirectPath())
+            ->with('success', 'Registration successful! Please log in with your credentials.');
+    }
+
+    // Handle business registration
+    public function registerBusiness(Request $request)
+    {
+        $this->validateBusiness($request);
+
+        event(new Registered($business = $this->createBusiness($request)));
+
+        return redirect($this->redirectPath())
+            ->with('success', 'Business registration successful! Please log in with your credentials.');
+    }
+
+    // Validate resident data
+    protected function validateResident(Request $request)
+    {
+        return $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:residents'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'address' => ['required', 'string'],
+            'age_group' => ['required', 'string'],
+            'gender' => ['required', 'string'],
+            'interests' => ['nullable', 'string'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
+    // Validate business data
+    protected function validateBusiness(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        return $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:businesses'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'contact_person' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'business_type' => ['required', 'string', 'max:100'],
+            'description' => ['required', 'string'],
+        ]);
+    }
+
+    // Create new resident
+    protected function createResident(Request $request)
+    {
+        return Resident::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'area_id' => $request->area_id,
+            'address' => $request->address,
+            'age_group' => $request->age_group,
+            'gender' => $request->gender,
+            'interests' => $request->interests,
+        ]);
+    }
+
+    // Create new business
+    protected function createBusiness(Request $request)
+    {
+        return Business::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'area_id' => $request->area_id,
+            'contact_person' => $request->contact_person,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'website' => $request->website,
+            'business_type' => $request->business_type,
+            'description' => $request->description,
+            'verified' => false, // New businesses start unverified
         ]);
     }
 }
