@@ -19,12 +19,23 @@
                                     </div>
                                 </div>
                             </div>
+                            {{--
                             <div class="col-md-6 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title">I am a Business</h5>
                                         <p class="card-text flex-grow-1">Register your health and wellness business to list products and services.</p>
                                         <a href="{{ route('register.business') }}" class="btn btn-primary">Register as Business</a>
+                                    </div>
+                                </div>
+                            </div>
+                            --}}
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">I am a new User</h5>
+                                        <p class="card-text flex-grow-1">Register your health and wellness business to list products and services.</p>
+                                        <a href="{{ route('register.guest') }}" class="btn btn-primary">Register as Guest User</a>
                                     </div>
                                 </div>
                             </div>

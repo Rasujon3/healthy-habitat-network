@@ -137,4 +137,19 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
     }
+    // Show guest registration form
+    public function showGuestRegistrationForm()
+    {
+        $areas = Area::all();
+        return view('auth.register-guest', compact('areas'));
+    }
+    protected function createGuestUser(Request $request)
+    {
+         User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        return view('auth.login')->with('success', 'Registration successful! Please log in with your credentials.');
+    }
 }
