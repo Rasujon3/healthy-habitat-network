@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,29 +33,16 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
-        // Check if user exists in residents table
-        $resident = Resident::where('email', $request->email)->first();
-        if ($resident) {
-            if (Auth::guard('resident')->attempt([
-                'email' => $request->email,
-                'password' => $request->password
-            ], $request->filled('remember'))) {
-                return redirect()->intended(route('resident.dashboard'));
-            }
+        // Attempt to authenticate against the users table
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ], $request->filled('remember'))) {
+            // Authentication passed
+            return redirect()->intended(route('products.index'));
         }
 
-        // Check if user exists in businesses table
-        $business = Business::where('email', $request->email)->first();
-        if ($business) {
-            if (Auth::guard('business')->attempt([
-                'email' => $request->email,
-                'password' => $request->password
-            ], $request->filled('remember'))) {
-                return redirect()->intended(route('business.dashboard'));
-            }
-        }
-
-        // If the login attempt was unsuccessful
+        // Authentication failed
         return $this->sendFailedLoginResponse($request);
     }
 
@@ -73,6 +61,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        /*
         if (Auth::guard('resident')->check()) {
             Auth::guard('resident')->logout();
         } elseif (Auth::guard('business')->check()) {
@@ -80,6 +69,8 @@ class LoginController extends Controller
         } else {
             Auth::logout();
         }
+        */
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

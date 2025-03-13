@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Resident extends Model
+class Resident extends Authenticatable
 {
     use HasFactory;
 
@@ -16,6 +17,7 @@ class Resident extends Model
         'age_group',
         'gender',
         'interest_areas',
+        'email',
     ];
 
     protected $casts = [

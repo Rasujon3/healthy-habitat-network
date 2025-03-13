@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Resident;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ResidentController extends Controller
 {
@@ -54,10 +55,11 @@ class ResidentController extends Controller
             'age_group' => $request->age_group,
             'gender' => $request->gender,
             'interest_areas' => json_encode($request->interest_areas), // Store as JSON
+            'email' => Auth::user()->email,
         ]);
 
         // Redirect or return response
-        return redirect()->route('resident.create')->with('success', 'Resident created successfully.');
+        return redirect()->route('products.index')->with('success', 'Resident created successfully.');
     }
 
     /**

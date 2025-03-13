@@ -61,7 +61,7 @@
                                     <select id="area_id" class="form-select @error('area_id') is-invalid @enderror" name="area_id" required>
                                         <option value="">Select your area</option>
                                         @foreach($areas as $area)
-                                            <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{ $area->name }}</option>
+                                            <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{ $area->area_name }}</option>
                                         @endforeach
                                     </select>
                                     @error('area_id')

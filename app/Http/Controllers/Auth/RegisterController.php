@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Resident;
 use App\Models\Business;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -42,8 +43,12 @@ class RegisterController extends Controller
     public function registerResident(Request $request)
     {
         $this->validateResident($request);
+        $user = $this->createUser($request);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Registration failed. Please try again.');
+        }
 
-        event(new Registered($resident = $this->createResident($request)));
+        event(new Registered($resident = $this->createResident($request, $user->id)));
 
         return redirect($this->redirectPath())
             ->with('success', 'Registration successful! Please log in with your credentials.');
@@ -93,14 +98,13 @@ class RegisterController extends Controller
     }
 
     // Create new resident
-    protected function createResident(Request $request)
+    protected function createResident(Request $request, $userId)
     {
         return Resident::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'user_id' => $userId,
             'area_id' => $request->area_id,
-            'address' => $request->address,
             'age_group' => $request->age_group,
             'gender' => $request->gender,
             'interests' => $request->interests,
@@ -122,6 +126,15 @@ class RegisterController extends Controller
             'business_type' => $request->business_type,
             'description' => $request->description,
             'verified' => false, // New businesses start unverified
+        ]);
+    }
+    // Create new user & return this id
+    protected function createUser(Request $request)
+    {
+        return User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
     }
 }

@@ -37,7 +37,7 @@ Route::get('/', function () {
 });
 
 // Auth routes provided by Laravel UI
-Auth::routes();
+#Auth::routes();
 
 // Protected routes that require authentication
 Route::middleware(['auth'])->group(function () {
