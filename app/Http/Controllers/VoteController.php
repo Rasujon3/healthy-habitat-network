@@ -60,12 +60,10 @@ class VoteController extends Controller
      */
     public function popularProducts()
     {
-        // Get products with vote counts
         $products = Product::withCount(['votes as positive_votes' => function ($query) {
             $query->where('vote_value', true);
         }])
             ->orderBy('positive_votes', 'desc')
-            ->take(10)
             ->with('business')
             ->get();
 
