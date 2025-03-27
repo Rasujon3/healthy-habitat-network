@@ -49,21 +49,21 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     @auth
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ request()->routeIs(['dashboard', 'dashboard.*']) ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Manage
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ route('areas.index') }}">Areas</a></li>
-                                <li><a class="dropdown-item" href="{{ route('businesses.index') }}">Businesses</a></li>
-                                <li><a class="dropdown-item" href="{{ route('products.index') }}">Products</a></li>
+                                <li><a class="dropdown-item {{ request()->routeIs(['areas', 'areas.*']) ? 'active' : '' }}" href="{{ route('areas.index') }}">Areas</a></li>
+                                <li><a class="dropdown-item {{ request()->routeIs(['businesses', 'businesses.*']) ? 'active' : '' }}" href="{{ route('businesses.index') }}">Businesses</a></li>
+                                <li><a class="dropdown-item {{ request()->routeIs(['products', 'products.*']) ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('votes.popular') }}">Popular Products</a>
+                            <a class="nav-link {{ request()->routeIs(['votes', 'votes.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
                         </li>
                     @endauth
                 </ul>
