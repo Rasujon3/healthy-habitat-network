@@ -49,6 +49,7 @@ class ProductController extends Controller
             'price_category' => 'required|in:affordable,moderate,premium',
             'product_type' => 'required|string|max:100',
             'price' => 'required|numeric|min:0',
+            'is_available' => 'boolean',
         ]);
 
         // Check if product already exists for this business
@@ -59,6 +60,8 @@ class ProductController extends Controller
         if ($existingProduct) {
             return back()->with('error', 'This product already exists for this business. Each product can only be registered once.');
         }
+
+        $validated['is_available'] = empty($validated['is_available']) ? 0 : 1;
 
         Product::create($validated);
 
@@ -87,6 +90,8 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'is_available' => 'boolean',
         ]);
+
+        $validated['is_available'] = empty($validated['is_available']) ? 0 : 1;
 
         $product->update($validated);
 
