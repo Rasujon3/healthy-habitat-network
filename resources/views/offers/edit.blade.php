@@ -47,7 +47,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $offer->is_active) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="is_active">
-                                            Available for sale
+                                            Active Offer
                                         </label>
                                     </div>
                                     @error('is_active')
