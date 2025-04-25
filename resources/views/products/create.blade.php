@@ -84,6 +84,16 @@
                             <div class="form-text">List any known health benefits of this product.</div>
                         </div>
 
+                        <!-- Certifications -->
+                        <div class="col-md-12 mb-3">
+                            <label for="certifications" class="form-label">Certifications</label>
+                            <textarea name="certifications" id="certifications" class="form-control @error('certifications') is-invalid @enderror" rows="3">{{ old('certifications') }}</textarea>
+                            @error('certifications')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <div class="form-text">Example: USDA Organic, Non-GMO</div>
+                        </div>
+
                         <!-- Price -->
                         <div class="col-md-6 mb-3">
                             <label for="price" class="form-label">Price <span class="text-danger">*</span></label>

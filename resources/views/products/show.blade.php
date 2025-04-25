@@ -70,6 +70,10 @@
                                 <strong>Health Benefits:</strong>
                                 <p>{{ $product->health_benefits ?? 'No health benefits provided' }}</p>
                             </div>
+                            <div class="col-md-12">
+                                <strong>Certifications:</strong>
+                                <p>{{ $product->certifications ?? 'No certifications added' }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

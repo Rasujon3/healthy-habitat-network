@@ -12,6 +12,11 @@ class ProductController extends Controller
     {
         $query = Product::with('business');
 
+        // Search by keyword (product name)
+        if ($request->has('search') && $request->search != '') {
+            $query->where('product_name', 'like', '%' . $request->search . '%');
+        }
+
         // Filter by product type
         if ($request->has('product_type') && $request->product_type != '') {
             $query->where('product_type', $request->product_type);
@@ -27,7 +32,19 @@ class ProductController extends Controller
             $query->where('price_category', $request->price_category);
         }
 
-        $products = $query->paginate(10);
+        // Sort by price
+        if ($request->has('price_sort') && $request->price_sort != '') {
+            if ($request->price_sort == 'low_to_high') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->price_sort == 'high_to_low') {
+                $query->orderBy('price', 'desc');
+            }
+        } else {
+            // Default sorting if no price sort is specified
+            $query->orderBy('created_at', 'desc'); // Or whatever your default sort is
+        }
+
+        $products = $query->paginate(10)->withQueryString(); // withQueryString preserves the filter parameters in pagination links
 
         // Get unique product types for filter dropdown
         $productTypes = Product::distinct()->pluck('product_type');
@@ -50,6 +67,7 @@ class ProductController extends Controller
             'product_type' => 'required|string|max:100',
             'price' => 'required|numeric|min:0',
             'is_available' => 'boolean',
+            'certifications' => 'required|string|max:255',
         ]);
 
         // Check if product already exists for this business
@@ -89,6 +107,7 @@ class ProductController extends Controller
             'product_type' => 'required|string|max:100',
             'price' => 'required|numeric|min:0',
             'is_available' => 'boolean',
+            'certifications' => 'required|string|max:255',
         ]);
 
         $validated['is_available'] = empty($validated['is_available']) ? 0 : 1;

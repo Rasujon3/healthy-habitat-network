@@ -18,6 +18,7 @@ class Product extends Model
         'product_type',
         'price',
         'is_available',
+        'certifications',
     ];
 
     public function business()

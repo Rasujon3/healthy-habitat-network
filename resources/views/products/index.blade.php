@@ -21,6 +21,12 @@
             <div class="card-body">
                 <form action="{{ route('products.index') }}" method="GET">
                     <div class="row">
+                        <!-- Keyword Search -->
+                        <div class="col-md-3 mb-3">
+                            <label for="search" class="form-label">Search by Product Name</label>
+                            <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Search products..." class="form-control">
+                        </div>
+
                         <!-- Product Type Filter -->
                         <div class="col-md-3 mb-3">
                             <label for="product_type" class="form-label">Product Type</label>
@@ -49,11 +55,24 @@
                             <input type="number" name="max_price" id="max_price" value="{{ request('max_price') }}" placeholder="Max Price" class="form-control">
                         </div>
 
+                        <!-- Price Sort Order -->
+                        <div class="col-md-3 mb-3">
+                            <label for="price_sort" class="form-label">Price Order</label>
+                            <select name="price_sort" id="price_sort" class="form-select">
+                                <option value="">Default</option>
+                                <option value="low_to_high" {{ request('price_sort') == 'low_to_high' ? 'selected' : '' }}>Low to High</option>
+                                <option value="high_to_low" {{ request('price_sort') == 'high_to_low' ? 'selected' : '' }}>High to Low</option>
+                            </select>
+                        </div>
+
                         <!-- Filter Button -->
                         <div class="col-md-3 d-flex align-items-end mb-3">
-                            <button type="submit" class="btn btn-secondary">
+                            <button type="submit" class="btn btn-secondary me-2">
                                 Apply Filters
                             </button>
+                            <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">
+                                Reset
+                            </a>
                         </div>
                     </div>
                 </form>

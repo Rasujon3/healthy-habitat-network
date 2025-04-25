@@ -66,6 +66,18 @@
                             </div>
 
                             <div class="form-group row mb-3">
+                                <label for="certifications" class="col-md-4 col-form-label text-md-right">certifications</label>
+                                <div class="col-md-6">
+                                    <textarea id="certifications" class="form-control @error('certifications') is-invalid @enderror" name="certifications" rows="3">{{ old('certifications', $product->certifications) }}</textarea>
+                                    @error('certifications')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
                                 <label for="price_category" class="col-md-4 col-form-label text-md-right">Price Category</label>
                                 <div class="col-md-6">
                                     <select id="price_category" class="form-control @error('price_category') is-invalid @enderror" name="price_category" required>
