@@ -65,6 +65,10 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs(['votes', 'votes.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
                         </li>
+                        {{-- Offers --}}
+                        <li class="nav-item ">
+                            <a class="nav-link {{ request()->routeIs(['offers', 'offers.*']) ? 'active' : '' }}" href="{{ route('offers.index') }}">Offers</a>
+                        </li>
                     @endauth
                 </ul>
 

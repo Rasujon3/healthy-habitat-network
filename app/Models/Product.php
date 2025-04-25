@@ -34,4 +34,8 @@ class Product extends Model
     {
         return $this->votes()->where('vote_value', true)->count();
     }
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
 }
