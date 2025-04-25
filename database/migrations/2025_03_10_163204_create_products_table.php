@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('product_type');
             $table->decimal('price', 10, 2);
             $table->boolean('is_available')->default(true);
+            $table->text('certifications');
             $table->timestamps();
         });
     }

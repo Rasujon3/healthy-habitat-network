@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/votes', [VoteController::class, 'store'])->name('votes.store');
     Route::delete('/votes/destroy/{id}', [VoteController::class, 'destroy'])->name('votes.destroy');
     Route::get('/popular-products', [VoteController::class, 'popularProducts'])->name('votes.popular');
+    Route::get('/vote-history', [VoteController::class, 'voteHistory'])->name('votes.voteHistory');
 
     // Offers
     Route::resource('offers', OfferController::class);

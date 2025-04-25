@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vote;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -78,5 +79,24 @@ class VoteController extends Controller
 
         Vote::where('id', $id)->delete();
         return back()->with('success', 'Your vote has been removed.');
+    }
+    public function voteHistory()
+    {
+        $residentId = Auth::user()->resident->id;
+
+        $products = Product::whereHas('votes', function ($query) use ($residentId) {
+            $query->where('resident_id', $residentId);
+        })
+            ->with(['business', 'votes' => function ($query) use ($residentId) {
+                $query->where('resident_id', $residentId);
+            }])
+            ->withCount(['votes as positive_votes' => function ($query) use ($residentId) {
+                $query->where('vote_value', true)
+                    ->where('resident_id', $residentId);
+            }])
+            ->orderByDesc('positive_votes')
+            ->get();
+
+        return view('votes.vote-histories', compact('products'));
     }
 }

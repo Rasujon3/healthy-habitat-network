@@ -98,6 +98,9 @@
                                     <a class="dropdown-item" href="{{ route('resident.edit', Auth::user()->resident) }}">
                                         {{ __('My Profile') }}
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('votes.voteHistory') }}">
+                                        {{ __('Vote History') }}
+                                    </a>
                                 @else
                                     <a class="dropdown-item" href="{{ route('resident.create') }}">
                                         {{ __('Complete Profile') }}
