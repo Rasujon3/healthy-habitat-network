@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\BusinessController;
@@ -71,6 +72,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/popular-products', [VoteController::class, 'popularProducts'])->name('votes.popular');
     Route::get('/vote-history', [VoteController::class, 'voteHistory'])->name('votes.voteHistory');
 
+    // Service Votes
+    Route::post('/service-votes', [VoteController::class, 'storeServiceVote'])->name('service-votes.store');
+    Route::delete('/service-votes/destroy/{id}', [VoteController::class, 'destroyServiceVote'])->name('service-votes.destroy');
+    Route::get('/popular-services', [VoteController::class, 'popularServices'])->name('service-votes.popular');
+    Route::get('/service-vote-history', [VoteController::class, 'serviceVoteHistory'])->name('service-votes.serviceVoteHistory');
+
     // Offers
     Route::resource('offers', OfferController::class);
+
+    // Services
+    Route::resource('services', ServiceController::class);
 });

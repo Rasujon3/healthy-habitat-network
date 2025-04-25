@@ -22,4 +22,8 @@ class Business extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 }
