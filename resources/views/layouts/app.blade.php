@@ -17,6 +17,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles (if needed) -->
+    <!-- Make sure to include Font Awesome for the social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             min-height: 100vh;
@@ -54,6 +56,18 @@
             font-weight: 600;
             box-shadow: 0 2px 8px rgba(70, 229, 197, 0.3); /* light shadow */
         }
+        .activeNav {
+            background-color: #2E8B57; /* nice primary color */
+            color: #fff; /* white text */
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(70, 229, 197, 0.3); /* light shadow */
+        }
+        .activeNav:hover {
+            background-color: #42855f; /* nice primary color */
+            color: #fff; /* white text */
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(70, 229, 197, 0.3); /* light shadow */
+        }
 
     </style>
 </head>
@@ -73,43 +87,39 @@
                 <ul class="navbar-nav me-auto">
                     @auth
                         <li class="nav-item ">
-                            <a class="nav-link {{ request()->routeIs(['dashboard', 'dashboard.*']) ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="nav-link {{ request()->routeIs(['dashboard', 'dashboard.*']) ? 'activeNav' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         @if(Auth::user()->localCouncil)
-                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['areas', 'areas.*']) ? 'active' : '' }}" href="{{ route('areas.index') }}">Areas</a></li>
+                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['areas', 'areas.*']) ? 'activeNav' : '' }}" href="{{ route('areas.index') }}">Areas</a></li>
                         @endif
                         @if(Auth::user()->sme)
-                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['businesses', 'businesses.*']) ? 'active' : '' }}" href="{{ route('businesses.index') }}">Businesses</a></li>
+                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['businesses', 'businesses.*']) ? 'activeNav' : '' }}" href="{{ route('businesses.index') }}">Businesses</a></li>
                         @endif
-                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['products', 'products.*']) ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a></li>
+                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['products', 'products.*']) ? 'activeNav' : '' }}" href="{{ route('products.index') }}">Products</a></li>
                         @if(Auth::user()->localCouncil)
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs(['votes.popular', 'votes.popular.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
+                                <a class="nav-link {{ request()->routeIs(['votes.popular', 'votes.popular.*']) ? 'activeNav' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
                             </li>
                         @endif
                         @if(Auth::user()->resident)
                         {{-- Offers --}}
                         <li class="nav-item ">
-                            <a class="nav-link {{ request()->routeIs(['offers', 'offers.*']) ? 'active' : '' }}" href="{{ route('offers.index') }}">Offers</a>
+                            <a class="nav-link {{ request()->routeIs(['offers', 'offers.*']) ? 'activeNav' : '' }}" href="{{ route('offers.index') }}">Offers</a>
                         </li>
                         @endif
                         {{-- Services --}}
                         <li class="nav-item ">
-                            <a class="nav-link {{ request()->routeIs(['services', 'services.*']) ? 'active' : '' }}" href="{{ route('services.index') }}">Services</a>
+                            <a class="nav-link {{ request()->routeIs(['services', 'services.*']) ? 'activeNav' : '' }}" href="{{ route('services.index') }}">Services</a>
                         </li>
                         @if(Auth::user()->localCouncil)
                         {{-- popular services --}}
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs(['service-votes.popular', 'service-votes.popular.*']) ? 'active' : '' }}" href="{{ route('service-votes.popular') }}">Popular Services</a>
+                            <a class="nav-link {{ request()->routeIs(['service-votes.popular', 'service-votes.popular.*']) ? 'activeNav' : '' }}" href="{{ route('service-votes.popular') }}">Popular Services</a>
                         </li>
                         @endif
-                        <li class="nav-item ">
-                            <a class="nav-link {{ request()->routeIs(['about', 'about.*']) ? 'active' : '' }}" href="{{ route('about') }}">About</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link {{ request()->routeIs(['contact', 'contact.*']) ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
-                        </li>
                     @endauth
+                    <a class="nav-link {{ request()->routeIs(['about', 'about.*']) ? 'activeNav' : '' }}" href="{{ route('about') }}">About</a>
+                    <a class="nav-link {{ request()->routeIs(['contact', 'contact.*']) ? 'activeNav' : '' }}" href="{{ route('contact') }}">Contact</a>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -182,11 +192,7 @@
         </div>
     </main>
 
-    <footer class="bg-light py-4 mt-4">
-        <div class="container text-center">
-            <p>&copy; {{ date('Y') }} Healthy Habitat Network. All rights reserved.</p>
-        </div>
-    </footer>
+    @include('layouts.footer')
 </div>
 
 <!-- Bootstrap JS Bundle with Popper from CDN -->
