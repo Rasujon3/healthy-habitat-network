@@ -16,6 +16,8 @@ class DashboardController extends Controller
     {
         $userId = Auth::user()->id;
         $authInfo = Auth::user();
+//        dd($userId);
+//        dd($authInfo,$userId);
 
         // Get total products
         $totalProducts = Product::count();
@@ -38,9 +40,11 @@ class DashboardController extends Controller
         })->count();
 
         $userTotalVotes = 0;
+        $areaName = '';
         if ($resident) {
             // Get user's total votes
             $userTotalVotes = Vote::where('resident_id',$resident->id)->count();
+            $areaName = $resident->area->area_name;
         }
 
         // Get recent activities (last 10 votes)
@@ -72,7 +76,8 @@ class DashboardController extends Controller
             'userTotalVotes',
             'recentActivities',
             'voteStats',
-            'areaInterest'
+            'areaInterest',
+            'areaName'
         ));
     }
 

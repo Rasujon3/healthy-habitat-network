@@ -90,7 +90,6 @@
                         <div class="card border-0 shadow-sm">
                             <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
                                 <h5 class="card-title mb-0">Recent Activity</h5>
-                                <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
                             </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
@@ -143,7 +142,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <strong>Area:</strong> {{ $authInfo->area->name ?? 'Not specified' }}
+                                    <strong>Area:</strong> {{ !empty($areaName) ? $areaName : 'Not specified' }}
                                 </div>
 
                                 <div class="mb-3">
