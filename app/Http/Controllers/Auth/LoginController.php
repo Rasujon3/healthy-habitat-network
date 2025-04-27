@@ -39,7 +39,7 @@ class LoginController extends Controller
             'password' => $request->password
         ], $request->filled('remember'))) {
             // Authentication passed
-            return redirect()->intended(route('products.index'));
+            return redirect()->intended(route('dashboard'));
         }
 
         // Authentication failed

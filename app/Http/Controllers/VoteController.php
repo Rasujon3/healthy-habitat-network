@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Service;
 use App\Models\ServiceVote;
 use App\Models\Vote;
@@ -60,16 +61,34 @@ class VoteController extends Controller
     /**
      * Display most popular products based on votes
      */
-    public function popularProducts()
+    public function popularProducts(Request $request)
     {
-        $products = Product::withCount(['votes as positive_votes' => function ($query) {
+        // Get all areas for the dropdown
+        $areas = Area::all();
+
+        // Start building the query
+        $productsQuery = Product::withCount(['votes as positive_votes' => function ($query) {
             $query->where('vote_value', true);
         }])
-            ->orderBy('positive_votes', 'desc')
-            ->with('business')
-            ->get();
+            ->with('business');
 
-        return view('votes.popular-products', compact('products'));
+        // Apply area filter if selected
+        if ($request->filled('area_id')) {
+            $productsQuery->fromArea($request->area_id);
+        }
+
+        // Get the filtered products ordered by positive votes
+        $products = $productsQuery->orderBy('positive_votes', 'desc')->get();
+
+        // Using eager loading to optimize area vote counts
+        $products->each(function ($product) {
+            $product->areaVotes = $product->getAreaVoteCounts();
+        });
+
+        // Pass the selected area to the view
+        $selectedArea = $request->area_id;
+
+        return view('votes.popular-products', compact('products', 'areas', 'selectedArea'));
     }
     public function destroy($id)
     {
@@ -168,15 +187,42 @@ class VoteController extends Controller
         ServiceVote::where('id', $id)->delete();
         return back()->with('success', 'Your vote has been removed.');
     }
-    public function popularServices()
+    public function popularServices(Request $request)
     {
-        $services = Service::withCount(['votes as positive_votes' => function ($query) {
+//        dd($request->all());
+        // Get all areas for the dropdown
+        $areas = Area::all();
+
+        // Start building the query
+        $servicesQuery = Service::withCount(['votes as positive_votes' => function ($query) {
             $query->where('vote_value', true);
         }])
-            ->orderBy('positive_votes', 'desc')
-            ->with('business')
-            ->get();
+            ->with('business');
 
-        return view('votes.popular-services', compact('services'));
+        // Apply area filter if selected
+        if ($request->filled('area_id')) {
+            $servicesQuery->fromArea($request->area_id);
+        }
+
+        // Get the filtered products ordered by positive votes
+        $services = $servicesQuery->orderBy('positive_votes', 'desc')->get();
+
+        // Using eager loading to optimize area vote counts
+        $services->each(function ($service) {
+            $service->areaVotes = $service->getAreaVoteCounts();
+        });
+
+        // Pass the selected area to the view
+        $selectedArea = $request->area_id;
+        // End building the query
+
+//        $services = Service::withCount(['votes as positive_votes' => function ($query) {
+//            $query->where('vote_value', true);
+//        }])
+//            ->orderBy('positive_votes', 'desc')
+//            ->with('business')
+//            ->get();
+
+        return view('votes.popular-services', compact('services', 'areas', 'selectedArea'));
     }
 }

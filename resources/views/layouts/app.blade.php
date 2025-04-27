@@ -64,7 +64,7 @@
                             <li class="nav-item "><a class="nav-link {{ request()->routeIs(['products', 'products.*']) ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a></li>
                         @if(Auth::user()->localCouncil)
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs(['popular-products', 'popular-products.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
+                                <a class="nav-link {{ request()->routeIs(['votes.popular', 'votes.popular.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
                             </li>
                         @endif
                         @if(Auth::user()->resident)
@@ -80,7 +80,7 @@
                         @if(Auth::user()->localCouncil)
                         {{-- popular services --}}
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs(['popular-services', 'popular-services.*']) ? 'active' : '' }}" href="{{ route('service-votes.popular') }}">Popular Services</a>
+                            <a class="nav-link {{ request()->routeIs(['service-votes.popular', 'service-votes.popular.*']) ? 'active' : '' }}" href="{{ route('service-votes.popular') }}">Popular Services</a>
                         </li>
                         @endif
                         <li class="nav-item ">
