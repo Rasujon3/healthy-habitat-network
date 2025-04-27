@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Resident;
 use App\Models\Business;
+use App\Models\Sme;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -51,15 +52,20 @@ class RegisterController extends Controller
         event(new Registered($resident = $this->createResident($request, $user->id)));
 
         return redirect($this->redirectPath())
-            ->with('success', 'Registration successful! Please log in with your credentials.');
+            ->with('success', 'Resident Registration successful! Please log in with your credentials.');
     }
 
     // Handle business registration
     public function registerBusiness(Request $request)
     {
+//        dd('registerBusiness', $request->all());
         $this->validateBusiness($request);
+        $user = $this->createUser($request);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Registration failed. Please try again.');
+        }
 
-        event(new Registered($business = $this->createBusiness($request)));
+        event(new Registered($business = $this->createBusiness($request, $user->id)));
 
         return redirect($this->redirectPath())
             ->with('success', 'Business registration successful! Please log in with your credentials.');
@@ -70,7 +76,7 @@ class RegisterController extends Controller
     {
         return $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:residents'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:residents', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'area_id' => ['required', 'exists:areas,id'],
             'address' => ['required', 'string'],
@@ -85,15 +91,15 @@ class RegisterController extends Controller
     {
         return $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:businesses'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'area_id' => ['required', 'exists:areas,id'],
-            'contact_person' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:50'],
-            'address' => ['required', 'string'],
-            'website' => ['nullable', 'url', 'max:255'],
-            'business_type' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string'],
+            'company_name'    => ['required', 'string', 'max:255'],
+            'contact_person'  => ['required', 'string', 'max:255'],
+            'phone'           => ['required', 'string', 'max:20'],
+            'address'         => ['required', 'string'],
+            'website'         => ['nullable', 'url'],
+            'business_type'   => ['required', 'string'],
+            'description'     => ['required', 'string'],
         ]);
     }
 
@@ -112,20 +118,17 @@ class RegisterController extends Controller
     }
 
     // Create new business
-    protected function createBusiness(Request $request)
+    protected function createBusiness(Request $request, $userId)
     {
-        return Business::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'area_id' => $request->area_id,
-            'contact_person' => $request->contact_person,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'website' => $request->website,
-            'business_type' => $request->business_type,
-            'description' => $request->description,
-            'verified' => false, // New businesses start unverified
+        return Sme::create([
+            'user_id'         => $userId,
+            'company_name'    => $request->company_name,
+            'contact_person'  => $request->contact_person,
+            'phone'           => $request->phone,
+            'address'         => $request->address,
+            'website'         => $request->website,
+            'business_type'   => $request->business_type,
+            'description'     => $request->description,
         ]);
     }
     // Create new user & return this id

@@ -153,9 +153,9 @@
                                     <a href="{{ route('login') }}">Login</a> to vote for this product.
                                 </div>
                             @elseif(!Auth::user()->resident)
-                                <div class="alert alert-info">
-                                    <a href="{{ route('resident.create') }}">Complete your profile</a> to vote for this product.
-                                </div>
+{{--                                <div class="alert alert-info">--}}
+{{--                                    <a href="{{ route('resident.create') }}">Complete your profile</a> to vote for this product.--}}
+{{--                                </div>--}}
                             @endif
                         </div>
 

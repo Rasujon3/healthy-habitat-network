@@ -1,4 +1,4 @@
-<!-- resources/views/auth/register-business.blade.php -->
+<!-- resources/views/auth/register-resident.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -6,10 +6,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Business Registration') }}</div>
+                    <div class="card-header">{{ __('Resident Registration') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ url('/register/business') }}">
+                        <form method="POST" action="{{ url('/register/resident') }}">
                             @csrf
 
                             <div class="mb-3 row">
@@ -55,14 +55,13 @@
                                 </div>
                             </div>
 
-                            {{--
                             <div class="mb-3 row">
-                                <label for="area_id" class="col-md-4 col-form-label text-md-end">{{ __('Business Area') }}</label>
+                                <label for="area_id" class="col-md-4 col-form-label text-md-end">{{ __('Area') }}</label>
                                 <div class="col-md-6">
                                     <select id="area_id" class="form-select @error('area_id') is-invalid @enderror" name="area_id" required>
                                         <option value="">Select your area</option>
                                         @foreach($areas as $area)
-                                            <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{ $area->name }}</option>
+                                            <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{ $area->area_name }}</option>
                                         @endforeach
                                     </select>
                                     @error('area_id')
@@ -72,46 +71,9 @@
                                     @enderror
                                 </div>
                             </div>
-                            --}}
 
                             <div class="mb-3 row">
-                                <label for="company_name" class="col-md-4 col-form-label text-md-end">{{ __('Company Name') }}</label>
-                                <div class="col-md-6">
-                                    <input id="company_name" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required>
-                                    @error('company_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="contact_person" class="col-md-4 col-form-label text-md-end">{{ __('Contact Person') }}</label>
-                                <div class="col-md-6">
-                                    <input id="contact_person" type="text" class="form-control @error('contact_person') is-invalid @enderror" name="contact_person" value="{{ old('contact_person') }}" required>
-                                    @error('contact_person')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="phone" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number') }}</label>
-                                <div class="col-md-6">
-                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required>
-                                    @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="address" class="col-md-4 col-form-label text-md-end">{{ __('Business Address') }}</label>
+                                <label for="address" class="col-md-4 col-form-label text-md-end">{{ __('Address') }}</label>
                                 <div class="col-md-6">
                                     <textarea id="address" class="form-control @error('address') is-invalid @enderror" name="address" required>{{ old('address') }}</textarea>
                                     @error('address')
@@ -123,30 +85,18 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="website" class="col-md-4 col-form-label text-md-end">{{ __('Website') }}</label>
+                                <label for="age_group" class="col-md-4 col-form-label text-md-end">{{ __('Age Group') }}</label>
                                 <div class="col-md-6">
-                                    <input id="website" type="url" class="form-control @error('website') is-invalid @enderror" name="website" value="{{ old('website') }}">
-                                    @error('website')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="mb-3 row">
-                                <label for="business_type" class="col-md-4 col-form-label text-md-end">{{ __('Business Type') }}</label>
-                                <div class="col-md-6">
-                                    <select id="business_type" class="form-select @error('business_type') is-invalid @enderror" name="business_type" required>
-                                        <option value="">Select business type</option>
-                                        <option value="nutrition" {{ old('business_type') == 'nutrition' ? 'selected' : '' }}>Nutrition</option>
-                                        <option value="fitness" {{ old('business_type') == 'fitness' ? 'selected' : '' }}>Fitness</option>
-                                        <option value="mental_health" {{ old('business_type') == 'mental_health' ? 'selected' : '' }}>Mental Health</option>
-                                        <option value="holistic_health" {{ old('business_type') == 'holistic_health' ? 'selected' : '' }}>Holistic Health</option>
-                                        <option value="medical_services" {{ old('business_type') == 'medical_services' ? 'selected' : '' }}>Medical Services</option>
-                                        <option value="other" {{ old('business_type') == 'other' ? 'selected' : '' }}>Other</option>
+                                    <select id="age_group" class="form-select @error('age_group') is-invalid @enderror" name="age_group" required>
+                                        <option value="">Select your age group</option>
+                                        <option value="18-24" {{ old('age_group') == '18-24' ? 'selected' : '' }}>18-24</option>
+                                        <option value="25-34" {{ old('age_group') == '25-34' ? 'selected' : '' }}>25-34</option>
+                                        <option value="35-44" {{ old('age_group') == '35-44' ? 'selected' : '' }}>35-44</option>
+                                        <option value="45-54" {{ old('age_group') == '45-54' ? 'selected' : '' }}>45-54</option>
+                                        <option value="55-64" {{ old('age_group') == '55-64' ? 'selected' : '' }}>55-64</option>
+                                        <option value="65+" {{ old('age_group') == '65+' ? 'selected' : '' }}>65+</option>
                                     </select>
-                                    @error('business_type')
+                                    @error('age_group')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -155,10 +105,28 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="description" class="col-md-4 col-form-label text-md-end">{{ __('Business Description') }}</label>
+                                <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
                                 <div class="col-md-6">
-                                    <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="4" required>{{ old('description') }}</textarea>
-                                    @error('description')
+                                    <select id="gender" class="form-select @error('gender') is-invalid @enderror" name="gender" required>
+                                        <option value="">Select your gender</option>
+                                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                                        <option value="non-binary" {{ old('gender') == 'non-binary' ? 'selected' : '' }}>Non-binary</option>
+                                        <option value="prefer-not-to-say" {{ old('gender') == 'prefer-not-to-say' ? 'selected' : '' }}>Prefer not to say</option>
+                                    </select>
+                                    @error('gender')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="interests" class="col-md-4 col-form-label text-md-end">{{ __('Health Interests') }}</label>
+                                <div class="col-md-6">
+                                    <textarea id="interests" class="form-control @error('interests') is-invalid @enderror" name="interests" placeholder="Nutrition, Fitness, Mental health, etc.">{{ old('interests') }}</textarea>
+                                    @error('interests')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -169,7 +137,7 @@
                             <div class="mb-3 row">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Register Business') }}
+                                        {{ __('Register') }}
                                     </button>
                                 </div>
                             </div>

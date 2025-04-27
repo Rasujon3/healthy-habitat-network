@@ -109,10 +109,10 @@
                                     <a class="dropdown-item" href="{{ route('votes.voteHistory') }}">
                                         {{ __('Vote History') }}
                                     </a>
-                                @else
-                                    <a class="dropdown-item" href="{{ route('resident.create') }}">
-                                        {{ __('Complete Profile') }}
-                                    </a>
+{{--                                @else--}}
+{{--                                    <a class="dropdown-item" href="{{ route('resident.create') }}">--}}
+{{--                                        {{ __('Complete Profile') }}--}}
+{{--                                    </a>--}}
                                 @endif
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"

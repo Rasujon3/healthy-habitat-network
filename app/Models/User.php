@@ -45,4 +45,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Resident::class);
     }
+    public function sme()
+    {
+        return $this->hasOne(Sme::class);
+    }
 }
