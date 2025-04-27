@@ -189,11 +189,9 @@ class VoteController extends Controller
     }
     public function popularServices(Request $request)
     {
-//        dd($request->all());
         // Get all areas for the dropdown
         $areas = Area::all();
 
-        // Start building the query
         $servicesQuery = Service::withCount(['votes as positive_votes' => function ($query) {
             $query->where('vote_value', true);
         }])
@@ -214,14 +212,6 @@ class VoteController extends Controller
 
         // Pass the selected area to the view
         $selectedArea = $request->area_id;
-        // End building the query
-
-//        $services = Service::withCount(['votes as positive_votes' => function ($query) {
-//            $query->where('vote_value', true);
-//        }])
-//            ->orderBy('positive_votes', 'desc')
-//            ->with('business')
-//            ->get();
 
         return view('votes.popular-services', compact('services', 'areas', 'selectedArea'));
     }

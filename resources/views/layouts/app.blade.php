@@ -35,6 +35,26 @@
             background-color: #6f42c1;
             color: white;
         }
+        .nav-link {
+            color: #555; /* normal text color */
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #f0f0f0;
+            color: #222;
+        }
+
+        .nav-link.active {
+            background-color: #2E8B57; /* nice primary color */
+            color: #fff; /* white text */
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(70, 229, 197, 0.3); /* light shadow */
+        }
+
     </style>
 </head>
 <body>

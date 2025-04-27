@@ -41,9 +41,9 @@
             </div>
         @endif
         <div class="divider"></div>
-        <h2>Service Vote List</h2>
-        <!-- Products Table -->
         @if($services->count() > 0)
+        <h2 class="mt-5">Service Vote List</h2>
+        <!-- Products Table -->
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover mb-0">
