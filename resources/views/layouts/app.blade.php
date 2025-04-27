@@ -10,6 +10,9 @@
 
     <title>{{ config('app.name', 'Healthy Habitat Network') }}</title>
 
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Bootstrap CSS from CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -52,30 +55,39 @@
                         <li class="nav-item ">
                             <a class="nav-link {{ request()->routeIs(['dashboard', 'dashboard.*']) ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Manage
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item {{ request()->routeIs(['areas', 'areas.*']) ? 'active' : '' }}" href="{{ route('areas.index') }}">Areas</a></li>
-                                <li><a class="dropdown-item {{ request()->routeIs(['businesses', 'businesses.*']) ? 'active' : '' }}" href="{{ route('businesses.index') }}">Businesses</a></li>
-                                <li><a class="dropdown-item {{ request()->routeIs(['products', 'products.*']) ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs(['popular-products', 'popular-products.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
-                        </li>
+                        @if(Auth::user()->localCouncil)
+                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['areas', 'areas.*']) ? 'active' : '' }}" href="{{ route('areas.index') }}">Areas</a></li>
+                        @endif
+                        @if(Auth::user()->sme)
+                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['businesses', 'businesses.*']) ? 'active' : '' }}" href="{{ route('businesses.index') }}">Businesses</a></li>
+                        @endif
+                            <li class="nav-item "><a class="nav-link {{ request()->routeIs(['products', 'products.*']) ? 'active' : '' }}" href="{{ route('products.index') }}">Products</a></li>
+                        @if(Auth::user()->localCouncil)
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs(['popular-products', 'popular-products.*']) ? 'active' : '' }}" href="{{ route('votes.popular') }}">Popular Products</a>
+                            </li>
+                        @endif
+                        @if(Auth::user()->resident)
                         {{-- Offers --}}
                         <li class="nav-item ">
                             <a class="nav-link {{ request()->routeIs(['offers', 'offers.*']) ? 'active' : '' }}" href="{{ route('offers.index') }}">Offers</a>
                         </li>
+                        @endif
                         {{-- Services --}}
                         <li class="nav-item ">
                             <a class="nav-link {{ request()->routeIs(['services', 'services.*']) ? 'active' : '' }}" href="{{ route('services.index') }}">Services</a>
                         </li>
+                        @if(Auth::user()->localCouncil)
                         {{-- popular services --}}
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs(['popular-services', 'popular-services.*']) ? 'active' : '' }}" href="{{ route('service-votes.popular') }}">Popular Services</a>
+                        </li>
+                        @endif
+                        <li class="nav-item ">
+                            <a class="nav-link {{ request()->routeIs(['about', 'about.*']) ? 'active' : '' }}" href="{{ route('about') }}">About</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ request()->routeIs(['contact', 'contact.*']) ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
                         </li>
                     @endauth
                 </ul>
