@@ -4,13 +4,13 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
                         <div class="row text-center">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title">I am a Resident</h5>
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                             </div>
-                            --}}
+
                             <div class="col-md-6 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body d-flex flex-column">
@@ -39,12 +39,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            --}}
+                            <div class="col-md-4 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title">I am a Resident</h5>
-                                        <p class="card-text flex-grow-1">Register as a resident to vote on health and wellness products in your area.</p>
+                                        <h5 class="card-title">I am a Business</h5>
+                                        <p class="card-text flex-grow-1">Register as a Business to vote on health and wellness products in your area.</p>
                                         <a href="{{ route('register.business') }}" class="btn btn-primary">Register as SMEs</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">I am a Local Council</h5>
+                                        <p class="card-text flex-grow-1">Register as a Local Council to check on health and wellness products in your area.</p>
+                                        <a href="{{ route('register.localCouncil') }}" class="btn btn-primary">Register as Local Council</a>
                                     </div>
                                 </div>
                             </div>

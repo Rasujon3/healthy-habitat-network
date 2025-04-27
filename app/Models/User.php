@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Sme::class);
     }
+    public function localCouncil()
+    {
+        return $this->hasOne(LocalCouncil::class);
+    }
 }

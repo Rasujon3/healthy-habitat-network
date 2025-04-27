@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\LocalCouncil;
 use App\Models\Resident;
 use App\Models\Business;
 use App\Models\Sme;
@@ -40,6 +41,13 @@ class RegisterController extends Controller
         return view('auth.register-business', compact('areas'));
     }
 
+    // Show business registration form
+    public function showLocalCouncilRegistrationForm()
+    {
+        $areas = Area::all();
+        return view('auth.register-local-council', compact('areas'));
+    }
+
     // Handle resident registration
     public function registerResident(Request $request)
     {
@@ -58,7 +66,6 @@ class RegisterController extends Controller
     // Handle business registration
     public function registerBusiness(Request $request)
     {
-//        dd('registerBusiness', $request->all());
         $this->validateBusiness($request);
         $user = $this->createUser($request);
         if (!$user) {
@@ -69,6 +76,20 @@ class RegisterController extends Controller
 
         return redirect($this->redirectPath())
             ->with('success', 'Business registration successful! Please log in with your credentials.');
+    }
+    // Handle business registration
+    public function registerLocalCouncil(Request $request)
+    {
+        $this->validateLocalCouncil($request);
+        $user = $this->createUser($request);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Registration failed. Please try again.');
+        }
+
+        event(new Registered($business = $this->createLocalCouncil($request, $user->id)));
+
+        return redirect($this->redirectPath())
+            ->with('success', 'Local Council registration successful! Please log in with your credentials.');
     }
 
     // Validate resident data
@@ -102,6 +123,19 @@ class RegisterController extends Controller
             'description'     => ['required', 'string'],
         ]);
     }
+    // Validate local council data
+    protected function validateLocalCouncil(Request $request)
+    {
+        return $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'council_name'    => ['required', 'string', 'max:255'],
+            'phone'           => ['required', 'string', 'max:20'],
+            'address'         => ['required', 'string'],
+            'description'     => ['required', 'string'],
+        ]);
+    }
 
     // Create new resident
     protected function createResident(Request $request, $userId)
@@ -128,6 +162,17 @@ class RegisterController extends Controller
             'address'         => $request->address,
             'website'         => $request->website,
             'business_type'   => $request->business_type,
+            'description'     => $request->description,
+        ]);
+    }
+    // Create new local council
+    protected function createLocalCouncil(Request $request, $userId)
+    {
+        return LocalCouncil::create([
+            'user_id'         => $userId,
+            'council_name'    => $request->council_name,
+            'phone'           => $request->phone,
+            'address'         => $request->address,
             'description'     => $request->description,
         ]);
     }

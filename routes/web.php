@@ -32,6 +32,9 @@ Route::post('/register/business', [RegisterController::class, 'registerBusiness'
 Route::get('/register/guest', [RegisterController::class, 'showGuestRegistrationForm'])->name('register.guest');
 Route::post('/register/guest', [RegisterController::class, 'createGuestUser']);
 
+Route::get('/register/local-council', [RegisterController::class, 'showLocalCouncilRegistrationForm'])->name('register.localCouncil');
+Route::post('/register/local-council', [RegisterController::class, 'registerLocalCouncil']);
+
 // Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
