@@ -48,7 +48,7 @@
         <!-- Copyright -->
         <div class="row justify-content-center mb-4">
             <div class="col-auto">
-                <p class="text-secondary small mb-0">Copyright &copy; {{ date('Y') }} Pluralsight LLC. All rights reserved</p>
+                <p class="text-secondary small mb-0">Copyright &copy; {{ date('Y') }} Healthy Habitat Network. All rights reserved</p>
             </div>
         </div>
 

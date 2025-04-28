@@ -102,7 +102,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="team-card text-center p-4">
                         <div class="team-img-wrapper mb-3">
-                            <img src="https://i.ibb.co/YZCkmL7/ruhul-amin-sujon.png" alt="Team Member" class="img-fluid rounded-circle team-img">
+                            <img src="{{ asset('images/7.jpg') }}" alt="Team Member" class="img-fluid rounded-circle team-img">
                         </div>
                         <h3 class="fw-bold">Emma Johnson</h3>
                         <p class="text-success mb-2">Founder & CEO</p>
@@ -114,7 +114,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="team-card text-center p-4">
                         <div class="team-img-wrapper mb-3">
-                            <img src="https://www.daktars.com/uploads/doctor/avatar/65/07ahmed.png" alt="Team Member" class="img-fluid rounded-circle team-img">
+                            <img src="{{ asset('images/6.jpg') }}" alt="Team Member" class="img-fluid rounded-circle team-img">
                         </div>
                         <h3 class="fw-bold">David Chen</h3>
                         <p class="text-success mb-2">Chief Operations Officer</p>
@@ -126,7 +126,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="team-card text-center p-4">
                         <div class="team-img-wrapper mb-3">
-                            <img src="https://rasujon3.github.io/penguin-fashion/images/model.png" alt="Team Member" class="img-fluid rounded-circle team-img">
+                            <img src="{{ asset('images/2.jpg') }}" alt="Team Member" class="img-fluid rounded-circle team-img">
                         </div>
                         <h3 class="fw-bold">Sophia Martinez</h3>
                         <p class="text-success mb-2">Community Director</p>

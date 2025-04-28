@@ -33,4 +33,9 @@ class HomeController extends Controller
     {
         return view('contact');
     }
+    public function contactSave(Request $request)
+    {
+        return redirect()->route('contact')
+            ->with('success', 'Message sent successfully.');
+    }
 }

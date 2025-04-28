@@ -48,6 +48,7 @@ Route::get('/', function () {
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::post('/contact/save', [HomeController::class, 'contactSave'])->name('contact.send');
 
 // Auth routes provided by Laravel UI
 #Auth::routes();
