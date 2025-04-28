@@ -24,14 +24,7 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4 p-md-5">
                             <h2 class="fw-bold mb-4">Send Us a Message</h2>
-
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            <form action="#" method="POST">
+                            <form action="{{ route('contact.send') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -89,7 +82,7 @@
                                 </div>
                                 <div>
                                     <h5 class="fw-bold">Our Location</h5>
-                                    <p class="text-muted mb-0">123 Wellness Street, Eco City, 12345</p>
+                                    <p class="text-muted mb-0">17 Bromley High Street, Bow, Uk</p>
                                 </div>
                             </div>
 
@@ -169,7 +162,15 @@
             <div class="row g-0">
                 <div class="col-12">
                     <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3152.2977305867104!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1619463427624!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9939.274362179154!2d-0.013456!3d51.5270707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761d0e29fbf519%3A0x7c3f946fc0d6c781!2s17%20Bromley%20High%20St%2C%20Bow%2C%20London%20E3%203AE%2C%20UK!5e0!3m2!1sen!2suk!4v1714305704312!5m2!1sen!2suk"
+                            width="100%"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>

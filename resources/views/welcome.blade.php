@@ -163,7 +163,7 @@
                         </div>
                         <h4 class="fw-bold">Nutrition Mastery</h4>
                         <p class="text-muted">Learn sustainable eating habits and meal planning techniques from certified nutritionists.</p>
-                        <a href="#" class="btn btn-outline-success">Learn more &rarr;</a>
+                        <a href="{{ route('services.index') }}" class="btn btn-outline-success">Learn more &rarr;</a>
                     </div>
                 </div>
 
@@ -177,7 +177,7 @@
                         </div>
                         <h4 class="fw-bold">Fitness Training</h4>
                         <p class="text-muted">Discover workout routines that fit your lifestyle with 64% faster progress.</p>
-                        <a href="#" class="btn btn-outline-success">Learn more &rarr;</a>
+                        <a href="{{ route('services.index') }}" class="btn btn-outline-success">Learn more &rarr;</a>
                     </div>
                 </div>
 
@@ -192,7 +192,7 @@
                         </div>
                         <h4 class="fw-bold">Mindfulness</h4>
                         <p class="text-muted">Experience a 17% productivity boost through guided meditation and stress-relief techniques.</p>
-                        <a href="#" class="btn btn-outline-success">Learn more &rarr;</a>
+                        <a href="{{ route('services.index') }}" class="btn btn-outline-success">Learn more &rarr;</a>
                     </div>
                 </div>
 
@@ -206,14 +206,14 @@
                         </div>
                         <h4 class="fw-bold">Eco-Living</h4>
                         <p class="text-muted">Save up to $27k annually with sustainable home practices and green living solutions.</p>
-                        <a href="#" class="btn btn-outline-success">Learn more &rarr;</a>
+                        <a href="{{ route('services.index') }}" class="btn btn-outline-success">Learn more &rarr;</a>
                     </div>
                 </div>
             </div>
 
             <div class="row mt-4">
                 <div class="col-12 text-center">
-                    <a href="#" class="btn btn-success px-4 py-2">View All Courses</a>
+                    <a href="{{ route('services.index') }}" class="btn btn-success px-4 py-2">View All Courses</a>
                 </div>
             </div>
         </div>
@@ -353,7 +353,8 @@
                     </div>
                     <div class="col-md-5 journey-image">
                         <div class="image-container rounded-circle overflow-hidden">
-                            <div class="image-placeholder bg-pattern-1"></div>
+{{--                            <div class="image-placeholder bg-pattern-1"></div>--}}
+                            <img src="{{ asset('images/discovery-man-adventure-searching.svg') }}" class="img-fluid" alt="Placeholder Image">
                         </div>
                     </div>
                 </div>
@@ -362,7 +363,8 @@
                 <div class="row journey-item mb-5">
                     <div class="col-md-5 journey-image order-md-1 order-3">
                         <div class="image-container rounded-circle overflow-hidden">
-                            <div class="image-placeholder bg-pattern-2"></div>
+{{--                            <div class="image-placeholder bg-pattern-2"></div>--}}
+                            <img src="{{ asset('images/innovation.svg') }}" class="img-fluid" alt="Placeholder Image" style="height: 100% !important;">
                         </div>
                     </div>
                     <div class="col-md-2 journey-icon d-flex justify-content-center order-md-2 order-1">
@@ -419,7 +421,8 @@
                     </div>
                     <div class="col-md-5 journey-image">
                         <div class="image-container rounded-circle overflow-hidden">
-                            <div class="image-placeholder bg-pattern-3"></div>
+{{--                            <div class="image-placeholder bg-pattern-3"></div>--}}
+                            <img src="{{ asset('images/achievement.svg') }}" class="img-fluid" alt="Placeholder Image" style="height: 100% !important;">
                         </div>
                     </div>
                 </div>
@@ -427,7 +430,7 @@
 
             <div class="row mt-5">
                 <div class="col-12 text-center">
-                    <a href="#" class="btn btn-gradient px-4 py-3 rounded-pill">Start Your Wellness Journey</a>
+                    <a href="{{  route('dashboard') }}" class="btn btn-gradient px-4 py-3 rounded-pill">Start Your Wellness Journey</a>
                 </div>
             </div>
         </div>
